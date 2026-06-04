@@ -7,7 +7,6 @@ sys.path.append(str(RUTA_PROYECTO))
 
 from src.carga_datos import CargaDatos
 
-
 COLUMNAS_NUMERICAS = [
     "Age",
     "MP",
