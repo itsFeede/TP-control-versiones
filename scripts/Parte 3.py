@@ -108,11 +108,24 @@ for p in p_values:
     sensibilidad.append(sens)
     especificidad.append(espec)
 
+
+
 #Calculamos el índice de Youden y encontramos el mejor punto de corte
 j = np.array(sensibilidad) + np.array(especificidad) - 1
 print("Mejor punto de corte:", p_values[j==max(j)])
 print("Sensibilidad:", np.array(sensibilidad)[j==max(j)])
 print("Especificidad:", np.array(especificidad)[j==max(j)])
+
+#Armamos la tabla de predicciones con el mejor punto de corte
+y_pred = 1 * (prob_pred >= p_values[j==max(j)])
+
+tabla =  pd.DataFrame({
+    'y_test=1': [np.sum((y_pred == 1) & (gls_sin_nulos_test == 1)), np.sum((y_pred == 0) & (gls_sin_nulos_test == 1))],
+    'y_test=0': [np.sum((y_pred == 1) & (gls_sin_nulos_test == 0)), np.sum((y_pred == 0) & (gls_sin_nulos_test == 0))],
+
+}, index=['y_pred=1', 'y_pred=0'])
+
+print(tabla)
 
 #Graficamos la curva ROC
 p1=1-np.array(especificidad)[j==max(j)]
@@ -172,6 +185,17 @@ print("Mejor punto de corte:", p_values[j==max(j)])
 print("Sensibilidad:", np.array(sensibilidad)[j==max(j)])
 print("Especificidad:", np.array(especificidad)[j==max(j)])
 
+#Armamos la tabla de predicciones con el mejor punto de corte
+y_pred = 1 * (prob_pred >= p_values[j==max(j)])
+
+tabla =  pd.DataFrame({
+    'y_test=1': [np.sum((y_pred == 1) & (gls_test == 1)), np.sum((y_pred == 0) & (gls_test == 1))],
+    'y_test=0': [np.sum((y_pred == 1) & (gls_test == 0)), np.sum((y_pred == 0) & (gls_test == 0))],
+
+}, index=['y_pred=1', 'y_pred=0'])
+
+print(tabla)
+
 #Graficamos la curva ROC
 p1=1-np.array(especificidad)[j==max(j)]
 p2=np.array(sensibilidad)[j==max(j)]
@@ -229,6 +253,17 @@ j = np.array(sensibilidad) + np.array(especificidad) - 1
 print("Mejor punto de corte:", p_values[j==max(j)])
 print("Sensibilidad:", np.array(sensibilidad)[j==max(j)])
 print("Especificidad:", np.array(especificidad)[j==max(j)])
+
+#Armamos la tabla de predicciones con el mejor punto de corte
+y_pred = 1 * (prob_pred >= p_values[j==max(j)])
+
+tabla =  pd.DataFrame({
+    'y_test=1': [np.sum((y_pred == 1) & (gls_test == 1)), np.sum((y_pred == 0) & (gls_test == 1))],
+    'y_test=0': [np.sum((y_pred == 1) & (gls_test == 0)), np.sum((y_pred == 0) & (gls_test == 0))],
+
+}, index=['y_pred=1', 'y_pred=0'])
+
+print(tabla)
 
 #Graficamos la curva ROC
 p1=1-np.array(especificidad)[j==max(j)]
